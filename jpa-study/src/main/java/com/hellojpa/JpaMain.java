@@ -14,12 +14,20 @@ public class JpaMain {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         try{
-            Member member = em.find(Member.class,150L);
-            member.setName("150번 또바꿈");
-            em.detach(member);
-            Member member1 = em.find(Member.class,150L);
-            em.clear(); //영속성 컨텍스트를 통으로 초기화 해버림
-            Member member3 = em.find(Member.class,150L);
+            Team team = new Team();
+            team.setName("Team!!");
+            em.persist(team);
+
+            Member member = new Member();
+            member.setUserName("멤버임");
+            member.setTeam(team);
+            em.persist(member);
+
+            List<Member> members = team.getMembers();
+            for (Member m : members) {
+                System.out.println(m.getUserName());
+            }
+
             tx.commit();
         }catch(Exception e){
             tx.rollback();
