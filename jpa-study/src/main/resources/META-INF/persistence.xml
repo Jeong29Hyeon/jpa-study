@@ -8,13 +8,14 @@
       <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
       <property name="javax.persistence.jdbc.user" value="sa"/>
       <property name="javax.persistence.jdbc.password" value=""/>
-      <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/test"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/test1"/>
       <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
-
+      <!-- JPA는 특정 데이터베이스에 종속X, 내가 쓰길 윈하는 dialect를 설정해줌-->
       <!-- 옵션 -->
       <property name="hibernate.show_sql" value="true"/>
       <property name="hibernate.format_sql" value="true"/>
       <property name="hibernate.use_sql_comments" value="true"/>
+      <property name="hibernate.jdbc.batch_size" value="10"/> <!-- 쿼리문을 10개 모았다가 날린다는 뜻 -->
       <!--<property name="hibernate.hbm2ddl.auto" value="create" />-->
     </properties>
   </persistence-unit>
