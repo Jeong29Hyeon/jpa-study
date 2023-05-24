@@ -14,11 +14,12 @@ public class JpaMain {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         try{
-            Member member = new Member(200L,"200멤버");
-            em.persist(member);
-            System.out.println("---------컨텍스트에 올려둠-------------");
-            em.flush();
-            System.out.println("지금 쿼리문 DB에 날라감");
+            Member member = em.find(Member.class,150L);
+            member.setName("150번 또바꿈");
+            em.detach(member);
+            Member member1 = em.find(Member.class,150L);
+            em.clear(); //영속성 컨텍스트를 통으로 초기화 해버림
+            Member member3 = em.find(Member.class,150L);
             tx.commit();
         }catch(Exception e){
             tx.rollback();
