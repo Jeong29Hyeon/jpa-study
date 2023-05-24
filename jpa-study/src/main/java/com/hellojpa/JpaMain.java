@@ -14,9 +14,15 @@ public class JpaMain {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         try{
-            Team findTeam = em.find(Team.class,7L);
+            System.out.println("멤버 찾음------------");
             Member findMember = em.find(Member.class, 2L);
-            findMember.setTeam(findTeam);
+            System.out.println("-------------------");
+            List<Member> members = findMember.getTeam().getMembers();
+            System.out.println("멤버의 팀에서 멤버들 찾음-------");
+            for (Member member : members) {
+                System.out.println(member.getUserName());
+            }
+            System.out.println("-------------------");
             tx.commit();
         }catch(Exception e){
             tx.rollback();
