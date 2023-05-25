@@ -24,8 +24,8 @@ public class JpaMain {
             em.flush();
             em.clear();
 
-            Movie findMovie = em.find(Movie.class, movie.getId());
-            System.out.println(findMovie.getActor());
+            Movie movie1 = em.find(Movie.class, movie.getId());
+            System.out.println("item = " + movie1.getName());
 
             tx.commit();
         }catch(Exception e){
