@@ -1,5 +1,6 @@
 package com.hellojpa;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
 import javax.persistence.EntityManager;
@@ -16,17 +17,16 @@ public class JpaMain {
         tx.begin();
         try{
             Movie movie = new Movie();
-            movie.setDirector("aaa");
-            movie.setActor("bbb");
-            movie.setName("바람과함께 사라짐ㅋ");
             movie.setPrice(10000);
+            movie.setName("바람과사라짐");
+            movie.setDirector("이정현");
+            movie.setActor("응애");
             em.persist(movie);
             em.flush();
             em.clear();
-
-            Movie movie1 = em.find(Movie.class, movie.getId());
-            System.out.println("item = " + movie1.getName());
-
+            Movie findItem = (Movie) em.find(Item.class, 1L);
+            System.out.println(findItem.getDirector());
+            
             tx.commit();
         }catch(Exception e){
             tx.rollback();
