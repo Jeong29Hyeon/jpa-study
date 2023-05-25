@@ -17,7 +17,7 @@
       <property name="hibernate.format_sql" value="true"/>
       <property name="hibernate.use_sql_comments" value="true"/>
       <property name="hibernate.jdbc.batch_size" value="10"/> <!-- 쿼리문을 10개 모았다가 날린다는 뜻 -->
-<!--      <property name="hibernate.hbm2ddl.auto" value="create" />-->
+      <property name="hibernate.hbm2ddl.auto" value="create" />
     </properties>
   </persistence-unit>
 </persistence>

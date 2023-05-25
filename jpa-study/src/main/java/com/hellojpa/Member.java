@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Member {
@@ -14,8 +15,11 @@ public class Member {
     private Long id;
     @Column(name="USERNAME")
     private String userName;
-//    @Column(name="TEAM_ID")
-//    private Long teamId;
+
+    @OneToOne
+    @JoinColumn(name="LOCKER_ID")
+    private Locker locker;
+
     @ManyToOne
     @JoinColumn(name="TEAM_ID")
     private Team team;
@@ -47,5 +51,16 @@ public class Member {
         this.userName = userName;
     }
 
+    public Locker getLocker() {
+        return locker;
+    }
 
+    public void setLocker(Locker locker) {
+        this.locker = locker;
+    }
+
+    public void addLocker(Locker locker) {
+        locker.setMember(this);
+        this.setLocker(locker);
+    }
 }
