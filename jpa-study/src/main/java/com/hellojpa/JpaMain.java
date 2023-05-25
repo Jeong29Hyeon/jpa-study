@@ -15,15 +15,18 @@ public class JpaMain {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         try{
-            Locker locker = new Locker();
-            locker.setName("라커1");
-            em.persist(locker);
+            Movie movie = new Movie();
+            movie.setDirector("aaa");
+            movie.setActor("bbb");
+            movie.setName("바람과함께 사라짐ㅋ");
+            movie.setPrice(10000);
+            em.persist(movie);
+            em.flush();
+            em.clear();
 
-            Member member = new Member();
-            member.setUserName("멤버임");
-            member.addLocker(locker);
-            locker.getMember().setUserName("멤버이름바꿔봄ㅁ");
-            em.persist(member);
+            Movie findMovie = em.find(Movie.class, movie.getId());
+            System.out.println(findMovie.getActor());
+
             tx.commit();
         }catch(Exception e){
             tx.rollback();
