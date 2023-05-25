@@ -1,22 +1,21 @@
 package com.hellojpa;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
-public class Team {
-    @Id @GeneratedValue
-    @Column(name = "TEAM_ID")
+public class Locker {
+    @Id
+    @GeneratedValue
     private Long id;
+
     private String name;
-    @OneToMany(mappedBy = "team")
-    private List<Member> members = new ArrayList<>();
+
+    @OneToOne(mappedBy = "locker")
+    private Member member;
 
     public Long getId() {
         return id;
@@ -34,11 +33,12 @@ public class Team {
         this.name = name;
     }
 
-    public List<Member> getMembers() {
-        return members;
+    public Member getMember() {
+        return member;
     }
 
-    public void setMembers(List<Member> members) {
-        this.members = members;
+    public void setMember(Member member) {
+        this.member = member;
     }
 }
+
