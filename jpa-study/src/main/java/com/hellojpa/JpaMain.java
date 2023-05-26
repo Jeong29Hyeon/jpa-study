@@ -7,6 +7,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceUnitUtil;
+import org.hibernate.Hibernate;
 
 public class JpaMain {
 
@@ -16,17 +18,19 @@ public class JpaMain {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         try{
-            Movie movie = new Movie();
-            movie.setPrice(10000);
-            movie.setName("바람과사라짐");
-            movie.setDirector("이정현");
-            movie.setActor("응애");
-            em.persist(movie);
+            Member member1 = new Member();
+            member1.setUserName("hello1");
+            em.persist(member1);
+
+
             em.flush();
             em.clear();
-            Movie findItem = (Movie) em.find(Item.class, 1L);
-            System.out.println(findItem.getDirector());
-            
+
+            Member m1 = em.getReference(Member.class, member1.getId());
+            System.out.println("PersistenceUnitUtil.isLoaded() "+ emf.getPersistenceUnitUtil().isLoaded(m1));
+            Hibernate.initialize(m1);
+            System.out.println(emf.getPersistenceUnitUtil().isLoaded(m1));
+
             tx.commit();
         }catch(Exception e){
             tx.rollback();
@@ -35,5 +39,7 @@ public class JpaMain {
         }
         emf.close();
     }
+
+
 
 }

@@ -17,10 +17,6 @@ public class Member extends BaseEntity{
     @Column(name="USERNAME")
     private String userName;
 
-    @OneToOne
-    @JoinColumn(name="LOCKER_ID")
-    private Locker locker;
-
     @ManyToOne
     @JoinColumn(name="TEAM_ID")
     private Team team;
@@ -53,16 +49,5 @@ public class Member extends BaseEntity{
         this.userName = userName;
     }
 
-    public Locker getLocker() {
-        return locker;
-    }
 
-    public void setLocker(Locker locker) {
-        this.locker = locker;
-    }
-
-    public void addLocker(Locker locker) {
-        locker.setMember(this);
-        this.setLocker(locker);
-    }
 }
