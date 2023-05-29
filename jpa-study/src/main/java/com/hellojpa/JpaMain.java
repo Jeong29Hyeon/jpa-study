@@ -18,19 +18,20 @@ public class JpaMain {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         try{
-            Child child1 = new Child();
-            Child child2 = new Child();
-            Parent parent = new Parent();
-            parent.addChild(child1);
-            parent.addChild(child2);
-            em.persist(parent);
+            Address address = new Address("city","street","zipcode");
+            Member member = new Member();
+            member.setUserName("hello1");
+            member.setHomeAddress(address);
+            em.persist(member);
 
-            em.flush();
-            em.clear();
+            Address copyAddress = new Address(address.getCity(), address.getStreet(),
+                address.getZipcode());
+            Member member2 = new Member();
+            member2.setUserName("hello1");
+            member2.setHomeAddress(copyAddress);
+            em.persist(member2);
 
-            Parent findParent = em.find(Parent.class, parent.getId());
-            System.out.println(findParent.getChildList().getClass());
-
+            member.getHomeAddress().setCity("newCity");
             tx.commit();
         }catch(Exception e){
             e.printStackTrace();
