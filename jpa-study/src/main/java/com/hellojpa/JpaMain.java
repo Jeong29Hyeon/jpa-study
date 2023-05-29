@@ -23,6 +23,9 @@ public class JpaMain {
             member.setUserName("hello1");
             member.setHomeAddress(address);
             em.persist(member);
+            Address address2 = new Address("city2","street","zipcode");
+            member.setHomeAddress(address2);
+
 
             Address copyAddress = new Address(address.getCity(), address.getStreet(),
                 address.getZipcode());
@@ -31,7 +34,7 @@ public class JpaMain {
             member2.setHomeAddress(copyAddress);
             em.persist(member2);
 
-            member.getHomeAddress().setCity("newCity");
+
             tx.commit();
         }catch(Exception e){
             e.printStackTrace();
