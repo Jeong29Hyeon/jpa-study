@@ -18,34 +18,19 @@ public class JpaMain {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         try{
-            Team team = new Team();
-            team.setName("teanA");
-            em.persist(team);
-
-            Team team2 = new Team();
-            team2.setName("teanA2");
-            em.persist(team2);
-
-            Member member1 = new Member();
-            member1.setUserName("hello1");
-            member1.setTeam(team);
-            em.persist(member1);
-
-            Member member2 = new Member();
-            member2.setUserName("hello2");
-            member2.setTeam(team2);
-            em.persist(member2);
-
-
+            Child child1 = new Child();
+            Child child2 = new Child();
+            Parent parent = new Parent();
+            parent.addChild(child1);
+            parent.addChild(child2);
+            em.persist(parent);
 
             em.flush();
             em.clear();
 
-//            Member m1 = em.find(Member.class, member1.getId());
-            List<Member> members = em.createQuery("select m from Member m join fetch m.team", Member.class)
-                .getResultList();
-            System.out.println("===========");
-            System.out.println("===========");
+            Parent findParent = em.find(Parent.class, parent.getId());
+            System.out.println(findParent.getChildList().getClass());
+
             tx.commit();
         }catch(Exception e){
             e.printStackTrace();
