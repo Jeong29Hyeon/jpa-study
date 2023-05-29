@@ -1,6 +1,7 @@
 package com.jpashop.main;
 
 import com.jpashop.domain.Book;
+import com.jpashop.domain.Delivery;
 import com.jpashop.domain.Item;
 import com.jpashop.domain.Order;
 import com.jpashop.domain.OrderItem;
@@ -18,15 +19,12 @@ public class JpaMain {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         try{
-            Book book = new Book();
-            book.setName("JPA");
-            book.setAuthor("김영한");
-            em.persist(book);
-            em.flush();
-            em.clear();
-            Item findItem =em.find(Item.class, book.getId());
-            Book findBook = (Book) findItem;
-            System.out.println("findItem.getAuthor() = " + findBook.getAuthor());
+            Delivery delivery = new Delivery();
+            OrderItem orderItem = new OrderItem();
+            Order order = new Order();
+            order.addOrderItem(orderItem);
+            order.setDelivery(delivery);
+            em.persist(order);
             tx.commit();
         }catch(Exception e){
             e.printStackTrace();
