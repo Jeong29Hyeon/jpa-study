@@ -1,3 +1,5 @@
+package jpql;
+
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -13,21 +15,16 @@ public class JpaMain {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         try{
-            Member member = new Member();
-            member.setUserName("member1");
-            member.setAge(10);
-            em.persist(member);
 
-            Member singleResult = em.createQuery("select m from Member m where m.userName = ?1",
+            List<Member> members= em.createQuery("select m from Member m",
                     Member.class)
-                .setParameter("1", "member1")
-                .getSingleResult();
+                .getResultList();
 
-//            List<Member> resultList = query.getResultList();
-//            for (Member member1 : resultList) {
+//            List<jpql.Member> resultList = query.getResultList();
+//            for (jpql.Member member1 : resultList) {
 //                System.out.println(member1);
 //            }
-//            Member singleResult = query.getSingleResult();
+//            jpql.Member singleResult = query.getSingleResult();
 //            System.out.println("singleResult = " + singleResult);
 
             TypedQuery<String> query1 = em.createQuery("select m.userName from Member m",String.class);

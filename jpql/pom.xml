@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>jpa-book</groupId>
-  <artifactId>jpql-basic</artifactId>
+  <artifactId>jpql</artifactId>
   <version>1.0-SNAPSHOT</version>
   <dependencies>
     <!-- JPA 하이버네이트 -->
@@ -21,7 +21,6 @@
       <version>1.4.199</version>
     </dependency>
   </dependencies>
-
   <properties>
     <maven.compiler.source>8</maven.compiler.source>
     <maven.compiler.target>8</maven.compiler.target>
