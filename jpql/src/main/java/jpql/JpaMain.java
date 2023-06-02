@@ -15,21 +15,25 @@ public class JpaMain {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         try{
-            Member member = new Member();
-            member.setUserName("member1");
-            member.setAge(10);
-            em.persist(member);
+            for(int i = 0; i < 100; i++){
+                Member member = new Member();
+                member.setUserName("member"+i);
+                member.setAge(i);
+                em.persist(member);
+            }
             em.flush();
             em.clear();
 
-            List<MemberDTO> resultList = em.createQuery(
-                    "select distinct new jpql.MemberDTO(m.userName,m.age) from Member m",
-                    MemberDTO.class)
+            List<Member> resultList = em.createQuery("select m from Member m order by m.age desc",
+                    Member.class)
+                .setFirstResult(0)
+                .setMaxResults(10)
                 .getResultList();
 
-            MemberDTO memberDTO = resultList.get(0);
-            System.out.println("userName " + memberDTO.getUserName());
-            System.out.println("age " + memberDTO.getAge());
+            System.out.println("resultList.size() = " + resultList.size());
+            for (Member findMember : resultList) {
+                System.out.println("findMember = " + findMember);
+            }
 
             tx.commit();
         }catch(Exception e){
