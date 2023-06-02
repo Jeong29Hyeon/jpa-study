@@ -15,20 +15,22 @@ public class JpaMain {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         try{
+            Member member = new Member();
+            member.setUserName("member1");
+            member.setAge(10);
+            em.persist(member);
+            em.flush();
+            em.clear();
 
-            List<Member> members= em.createQuery("select m from Member m",
-                    Member.class)
+            List<MemberDTO> resultList = em.createQuery(
+                    "select distinct new jpql.MemberDTO(m.userName,m.age) from Member m",
+                    MemberDTO.class)
                 .getResultList();
 
-//            List<jpql.Member> resultList = query.getResultList();
-//            for (jpql.Member member1 : resultList) {
-//                System.out.println(member1);
-//            }
-//            jpql.Member singleResult = query.getSingleResult();
-//            System.out.println("singleResult = " + singleResult);
+            MemberDTO memberDTO = resultList.get(0);
+            System.out.println("userName " + memberDTO.getUserName());
+            System.out.println("age " + memberDTO.getAge());
 
-            TypedQuery<String> query1 = em.createQuery("select m.userName from Member m",String.class);
-            Query query2 = em.createQuery("select m.userName,m.age from Member m");
             tx.commit();
         }catch(Exception e){
             e.printStackTrace();
