@@ -1,5 +1,6 @@
 package jpql;
 
+import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
 
 import javax.persistence.Entity;
@@ -18,6 +19,10 @@ public class Member {
     @JoinColumn(name = "team_id")
     private Team team;
 
+    public void changeTeam(Team team){
+        this.setTeam(team);
+        team.getMembers().add(this);
+    }
     public Team getTeam() {
         return team;
     }
