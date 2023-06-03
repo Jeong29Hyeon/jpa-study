@@ -20,23 +20,24 @@ public class JpaMain {
             team.setName("teamA");
             em.persist(team);
             Member member = new Member();
-            member.setUserName("member1");
+            member.setUserName("admin");
             member.setAge(10);
             member.setType(MemberType.ADMIN);
             member.changeTeam(team);
             em.persist(member);
+            Member member2 = new Member();
+            member2.setUserName("admin");
+            member2.setAge(10);
+            member2.setType(MemberType.ADMIN);
+            member2.changeTeam(team);
+            em.persist(member2);
+
             em.flush();
             em.clear();
-            String query = "select m.userName, 'HELLO', m.type, TRUE from Member m where m.type =:type";
-            List<Object[]> resultList = em.createQuery(query)
-                .setParameter("type",MemberType.ADMIN)
-                .getResultList();
-
-            for (Object[] objects : resultList) {
-                System.out.println(objects[0]);
-                System.out.println(objects[1]);
-                System.out.println(objects[2]);
-                System.out.println(objects[3]);
+            String query = "select function('group_concat',m.userName) from Member m";
+            List<String> result = em.createQuery(query, String.class).getResultList();
+            for (String s : result) {
+                System.out.println("result = " + s);
             }
 
             tx.commit();
