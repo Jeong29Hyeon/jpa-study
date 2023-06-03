@@ -9,37 +9,36 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 public class JpaMain {
+
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         tx.begin();
-        try{
-            for(int i = 0; i < 100; i++){
-                Member member = new Member();
-                member.setUserName("member"+i);
-                member.setAge(i);
-                em.persist(member);
-            }
+        try {
+            Team team = new Team();
+            team.setName("teamA");
+            em.persist(team);
+            Member member = new Member();
+            member.setUserName("member");
+            member.setAge(10);
+            member.changeTeam(team);
+            em.persist(member);
             em.flush();
             em.clear();
-
-            List<Member> resultList = em.createQuery("select m from Member m order by m.age desc",
+            String query = "select m from Member m left join Team t on m.userName = t.name";
+            List<Member> resultList = em.createQuery(query,
                     Member.class)
-                .setFirstResult(0)
-                .setMaxResults(10)
                 .getResultList();
 
-            System.out.println("resultList.size() = " + resultList.size());
-            for (Member findMember : resultList) {
-                System.out.println("findMember = " + findMember);
-            }
-
+            Member findMember = resultList.get(0);
+            System.out.println(
+                "findMember.getTeam().getClass() = " + findMember.getTeam().getClass());
             tx.commit();
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             tx.rollback();
-        }finally {
+        } finally {
             em.close();
         }
         emf.close();
